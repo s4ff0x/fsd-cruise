@@ -1,18 +1,15 @@
 {
   "name": "fsd-cruise",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Simple cli tool to visualize your FSD architecture (based on dependency-cruiser)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "depcruise:archi1": "cd /Users/antonm/_dev/typing/typing-trainer && depcruise --version && depcruise --config ./depcruise-config.cjs --output-type archi ./src | dot -T svg | depcruise-wrap-stream-in-html > ./fsd-high-level-dependencies.html",
-    "depcruise:archi": "depcruise --version && depcruise --config depcruise-config.cjs --output-type archi src | dot -T svg | depcruise-wrap-stream-in-html > high-level-dependencies.html"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Anton Mendelson",
   "license": "MIT",
   "dependencies": {
     "child_process": "^1.0.2",
-    "dependency-cruiser": "^16.2.4",
     "path": "^0.12.7",
     "yargs": "^17.7.2"
   },

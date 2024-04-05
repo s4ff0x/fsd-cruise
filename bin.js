@@ -13,7 +13,7 @@ const cruiseConfigPath = path.join(__dirname, "depcruise-config.cjs");
 // Set the TSCONFIG_PATH environment variable for this script's process
 process.env.TSCONFIG_PATH = tsConfigPath;
 
-const command = `depcruise --version && depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
+const command = `npx -p dependency-cruiser@16.2.4 -p typescript@5.2.2 depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
 
 exec(command, (error, stdout, stderr) => {
   if (error) {
