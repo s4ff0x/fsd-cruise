@@ -1,6 +1,6 @@
 {
   "name": "fsd-cruise",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple cli tool to visualize your FSD architecture (based on dependency-cruiser)",
   "main": "index.js",
   "scripts": {
