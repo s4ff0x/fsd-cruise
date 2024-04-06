@@ -10,11 +10,13 @@ Simple dependency visualization for [Feature Sliced Design](https://feature-slic
 
 ## Usage
 
-### Just invoke with npx
+### Install dependency-cruiser and run with npx
 
 ```shell
+npm i dependency-cruiser -D
 npx fsd-cruise
 ```
+
 > **requirements:** dependency-cruiser requires the `graphviz` library, which will be automatically installed using `brew`
 
 > **limitations:** Currently, it only operates with the provided `tsconfig.json` and `src` folder paths, which are assumed by default to be in the root directory.
