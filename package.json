@@ -1,8 +1,17 @@
 {
   "name": "fsd-cruise",
-  "version": "1.0.5-beta.1",
+  "version": "1.0.5-beta.2",
   "description": "Simple cli tool to visualize your FSD architecture (based on dependency-cruiser)",
-  "main": "index.js",
+  "repository": "https://github.com/s4ff0x/fsd-cruise",
+  "keywords": [
+    "dependency-cruiser",
+    "dependencies",
+    "javascript",
+    "feature-sliced",
+    "static analysis",
+    "visualization"
+  ],
+  "main": "bin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
