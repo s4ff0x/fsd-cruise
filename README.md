@@ -24,3 +24,6 @@ npx fsd-cruise
     ```shell
     npx fsd-cruise app/src app/tsconfig.json
     ```
+
+## Output example
+<img width="1078" alt="image" src="https://github.com/s4ff0x/fsd-cruise/assets/46251157/187837b4-5f79-425a-8e86-b34fa90e7a48">
