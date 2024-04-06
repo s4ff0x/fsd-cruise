@@ -13,9 +13,6 @@ module.exports = {
     },
 
     includeOnly: "^src",
-    // exclude: {
-    //   path: "^src/shared",
-    // },
 
     tsPreCompilationDeps: false,
 
@@ -25,8 +22,8 @@ module.exports = {
 
     /* How to resolve external modules - use "yarn-pnp" if you're using yarn's Plug'n'Play.
        otherwise leave it out (or set to the default, which is 'node_modules')
+       externalModuleResolutionStrategy: "yarn-pnp",
     */
-    externalModuleResolutionStrategy: "yarn-pnp",
 
     progress: { type: "performance-log" },
 
@@ -43,6 +40,10 @@ module.exports = {
             },
             {
               criteria: { source: "^src/app/[^/]+" },
+              attributes: { fillcolor: "#ffbdbd" },
+            },
+            {
+              criteria: { source: "^src/layouts/[^/]+" },
               attributes: { fillcolor: "#ffbdbd" },
             },
             {
