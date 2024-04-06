@@ -24,12 +24,12 @@ function execShellCommand(cmd, highlightedMsg) {
   return new Promise((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
-        console.error(`exec error: ${error}`);
+        console.log(chalk.red.bold(`exec error: ${error}`));
         reject(error);
         return;
       }
       if (stdout) console.log(`stdout: ${stdout}`);
-      if (stderr) console.error(`stderr: ${stderr}`);
+      if (stderr) console.log(`stderr: ${stderr}`);
       if (highlightedMsg) console.log(chalk.green.bold(highlightedMsg));
       resolve(stdout);
     });
@@ -73,7 +73,7 @@ function checkGraphvizInstallation() {
 }
 
 function runDependencyCruiser() {
-  const command = `npx -p dependency-cruiser@16.2.4 -p typescript@5.2.2 depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
+  const command = `depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
 
   execShellCommand(command, "Dependency cruiser finished running.")
     .then(() => {

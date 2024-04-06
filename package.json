@@ -1,6 +1,6 @@
 {
   "name": "fsd-cruise",
-  "version": "1.0.5-beta.3",
+  "version": "1.0.5-beta.4",
   "description": "Simple cli tool to visualize your FSD architecture (based on dependency-cruiser)",
   "repository": "https://github.com/s4ff0x/fsd-cruise",
   "keywords": [
