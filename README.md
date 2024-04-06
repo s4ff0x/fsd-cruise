@@ -13,7 +13,7 @@ Simple dependency visualization for [Feature Sliced Design](https://feature-slic
 ### Install dependency-cruiser and run with npx
 
 ```shell
-npm i dependency-cruiser -D
+yarn add dependency-cruiser -D
 npx fsd-cruise
 ```
 

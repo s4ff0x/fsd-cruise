@@ -36,7 +36,25 @@ function execShellCommand(cmd, highlightedMsg) {
   });
 }
 
-// New function to check Graphviz installation
+function checkDependencyCruiserInstallation() {
+  console.log(chalk.yellow.bold("Checking Dependency Cruiser installation..."));
+  execShellCommand("depcruise --version", "Dependency Cruiser is installed.")
+    .then(() => {
+      // Dependency Cruiser is installed, continue with the script
+      checkGraphvizInstallation();
+    })
+    .catch(() => {
+      // Dependency Cruiser is not installed, prompt the user for installation
+      console.log(
+        chalk.red(
+          "Dependency Cruiser is not installed. Suggestions: yarn add -D dependency-cruiser",
+        ),
+      );
+      process.exit(1);
+    });
+}
+
+// Function to check Graphviz installation
 function checkGraphvizInstallation() {
   console.log(chalk.yellow.bold("Check Graphviz installation..."));
   execShellCommand("dot -V")
@@ -50,7 +68,6 @@ function checkGraphvizInstallation() {
         "Graphviz is not installed. Do you want to install graphviz using brew? (yes/no): ",
         function (answer) {
           if (answer.toLowerCase() === "yes") {
-            // Install graphviz if user said yes
             execShellCommand(
               "brew install graphviz",
               "Graphviz installed successfully!",
@@ -59,13 +76,10 @@ function checkGraphvizInstallation() {
               .catch((error) =>
                 console.error(`Error installing graphviz: ${error}`),
               )
-              .finally(() => {
-                rl.close(); // Make sure readline is closed
-              });
+              .finally(() => rl.close()); // Make sure readline is closed
           } else {
-            // Directly run the command if user said no or provided an invalid answer
             runDependencyCruiser();
-            rl.close(); // Make sure readline is closed here as well
+            rl.close(); // Close readline here as well
           }
         },
       );
@@ -75,7 +89,7 @@ function checkGraphvizInstallation() {
 function runDependencyCruiser() {
   const command = `depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
 
-  execShellCommand(command, "Dependency cruiser finished running.")
+  execShellCommand(command, "fsd-cruise finished running.")
     .then(() => {
       process.exit(0); // Exit script successfully after running
     })
@@ -85,5 +99,5 @@ function runDependencyCruiser() {
     });
 }
 
-// Start the script by checking for Graphviz installation
-checkGraphvizInstallation();
+// Start the script by checking for Dependency Cruiser installation
+checkDependencyCruiserInstallation();
