@@ -8,18 +8,33 @@
 
 Simple dependency visualization for [Feature Sliced Design](https://feature-sliced.design/) based on [dependency-cruiser](https://www.npmjs.com/package/dependency-cruiser)
 
+## Requirements & Limitations
+
+> **requirements:** dependency-cruiser requires the `graphviz` library, you can install it using `brew`
+
+> **limitations:** Currently, it only operates with the provided `tsconfig.json` and `src` folder paths, which are assumed by default to be in the root directory.
+
 ## Usage
 
-### Install dependency-cruiser and run with npx
+### Run with npx
 
 ```shell
-yarn add dependency-cruiser -D
+npm i dependency-cruiser -D
 npx fsd-cruise
 ```
 
-> **requirements:** dependency-cruiser requires the `graphviz` library, which will be automatically installed using `brew`
+### Or install locally and run using either Node or npm scripts
 
-> **limitations:** Currently, it only operates with the provided `tsconfig.json` and `src` folder paths, which are assumed by default to be in the root directory.
+```shell
+npm i dependency-cruiser fsd-cruise -D
+
+# Node usage variant
+node node_modules/fsd-cruise/bin.js
+
+# NPM scripts usage variant
+# add to package.json scripts -> "generate:fsd-cruise": "node node_modules/fsd-cruise/bin.js"
+```
+
 ## Customization
 
 1. You can provide custom paths to `src` folder and `tsconfig.json`
