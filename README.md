@@ -16,17 +16,16 @@ Simple dependency visualization for [Feature Sliced Design](https://feature-slic
 
 ## Usage
 
-### Run with npx
+### Run with npx (recommended)
 
 ```shell
-npm i dependency-cruiser -D
 npx fsd-cruise
 ```
 
 ### Or install locally and run using either Node or npm scripts
 
 ```shell
-npm i dependency-cruiser fsd-cruise -D
+npm i fsd-cruise -D
 
 # Node usage variant
 node node_modules/fsd-cruise/bin.js
@@ -38,9 +37,10 @@ node node_modules/fsd-cruise/bin.js
 ## Customization
 
 1. You can provide custom paths to `src` folder and `tsconfig.json`
-    ```shell
-    npx fsd-cruise app/src app/tsconfig.json
-    ```
+   ```shell
+   npx fsd-cruise app/src app/tsconfig.json
+   ```
 
 ## Output example
+
 <img width="1078" alt="image" src="https://github.com/s4ff0x/fsd-cruise/assets/46251157/187837b4-5f79-425a-8e86-b34fa90e7a48">

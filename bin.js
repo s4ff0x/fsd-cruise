@@ -3,6 +3,7 @@
 const { exec } = require("child_process");
 const readline = require("readline");
 const path = require("path");
+const fs = require("fs");
 const chalk = require("chalk");
 
 // Create readline interface for user input
@@ -15,6 +16,46 @@ const rl = readline.createInterface({
 const srcPath = process.argv[2] || "src";
 const tsConfigPath = process.argv[3] || "tsconfig.json";
 const cruiseConfigPath = path.join(__dirname, "depcruise-config.cjs");
+
+// Function to find the binary path, with fallbacks
+function findBinary(binaryName) {
+  // First try: node_modules/.bin in current package
+  const binPath = path.join(__dirname, "node_modules", ".bin", binaryName);
+  if (fs.existsSync(binPath)) {
+    return binPath;
+  }
+
+  // Second try: find in dependency-cruiser package's node_modules/.bin
+  const depcruiseBinPath = path.join(
+    __dirname,
+    "node_modules",
+    "dependency-cruiser",
+    "node_modules",
+    ".bin",
+    binaryName
+  );
+  if (fs.existsSync(depcruiseBinPath)) {
+    return depcruiseBinPath;
+  }
+
+  // Third try: try to resolve using require.resolve
+  try {
+    const depcruisePath = require.resolve("dependency-cruiser/package.json");
+    const depcruiseDir = path.dirname(depcruisePath);
+    const resolvedBin = path.join(depcruiseDir, "node_modules", ".bin", binaryName);
+    if (fs.existsSync(resolvedBin)) {
+      return resolvedBin;
+    }
+  } catch (e) {
+    // Continue to fallback
+  }
+
+  // Fallback: use npx (will use local node_modules if available)
+  return `npx ${binaryName}`;
+}
+
+const depcruiseBin = findBinary("depcruise");
+const wrapStreamBin = findBinary("depcruise-wrap-stream-in-html");
 
 // Set the TSCONFIG_PATH environment variable for this script's process
 process.env.TSCONFIG_PATH = tsConfigPath;
@@ -34,24 +75,6 @@ function execShellCommand(cmd, highlightedMsg) {
       resolve(stdout);
     });
   });
-}
-
-function checkDependencyCruiserInstallation() {
-  console.log(chalk.yellow.bold("Checking Dependency Cruiser installation..."));
-  execShellCommand("depcruise --version", "Dependency Cruiser is installed.")
-    .then(() => {
-      // Dependency Cruiser is installed, continue with the script
-      checkGraphvizInstallation();
-    })
-    .catch(() => {
-      // Dependency Cruiser is not installed, prompt the user for installation
-      console.log(
-        chalk.red(
-          "Dependency Cruiser is not installed. Suggestions: yarn add -D dependency-cruiser",
-        ),
-      );
-      process.exit(1);
-    });
 }
 
 // Function to check Graphviz installation
@@ -87,7 +110,7 @@ function checkGraphvizInstallation() {
 }
 
 function runDependencyCruiser() {
-  const command = `depcruise --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | depcruise-wrap-stream-in-html > fsd-high-level-dependencies.html`;
+  const command = `${depcruiseBin} --config ${cruiseConfigPath} --output-type archi ${srcPath} | dot -T svg | ${wrapStreamBin} > fsd-high-level-dependencies.html`;
 
   execShellCommand(command, "fsd-cruise finished running.")
     .then(() => {
@@ -99,5 +122,5 @@ function runDependencyCruiser() {
     });
 }
 
-// Start the script by checking for Dependency Cruiser installation
-checkDependencyCruiserInstallation();
+// Start the script by checking Graphviz installation (dependency-cruiser is bundled)
+checkGraphvizInstallation();
