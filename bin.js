@@ -89,6 +89,18 @@ function findBinary(binaryName) {
     // Continue to fallback
   }
 
+  // Fourth try: parent node_modules/.bin (handles npx hoisting where
+  // dependency-cruiser binaries are siblings rather than nested)
+  const parentBinPath = path.join(
+    __dirname,
+    "..",
+    ".bin",
+    binaryName
+  );
+  if (fs.existsSync(parentBinPath)) {
+    return parentBinPath;
+  }
+
   // Fallback: use npx (will use local node_modules if available)
   return `npx ${binaryName}`;
 }
@@ -99,10 +111,18 @@ const wrapStreamBin = findBinary("depcruise-wrap-stream-in-html");
 // Set the TSCONFIG_PATH environment variable for this script's process
 process.env.TSCONFIG_PATH = tsConfigPath;
 
+// Ensure dependency-cruiser can discover transpilers (e.g. typescript)
+// installed in the target project, not just those co-located with fsd-cruise.
+const projectNodeModules = path.resolve(process.cwd(), "node_modules");
+const existingNodePath = process.env.NODE_PATH || "";
+const nodePath = existingNodePath
+  ? `${projectNodeModules}${path.delimiter}${existingNodePath}`
+  : projectNodeModules;
+
 // Function to execute a shell command and return a promise
 function execShellCommand(cmd, highlightedMsg) {
   return new Promise((resolve, reject) => {
-    exec(cmd, (error, stdout, stderr) => {
+    exec(cmd, { env: { ...process.env, NODE_PATH: nodePath } }, (error, stdout, stderr) => {
       if (error) {
         console.log(chalk.red.bold(`exec error: ${error}`));
         reject(error);
