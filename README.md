@@ -36,11 +36,24 @@ node node_modules/fsd-cruise/bin.js
 
 ## Customization
 
-1. You can provide custom paths to `src` folder and `tsconfig.json`
-   ```shell
-   npx fsd-cruise app/src app/tsconfig.json
-   ```
+You can provide custom paths to your `src` folder and `tsconfig.json`. By default, only a high-level `fsd-high-level-dependencies.html` file is generated (collapsed to a folder depth of 3).
+
+```shell
+npx fsd-cruise app/src app/tsconfig.json
+```
+
+### Detailed Graph Generation
+
+If you want an additional interactive canvas showing detailed file-level relationships within your architecture, you can use the `--detailed` flag (takes significantly more time). You can also specify the `--depth` (default 4) to dictate how deep the folders in the detailed graph should be collapsed:
+
+```shell
+# Generate the high-level graph AND the detailed graph with the default depth of 4
+npx fsd-cruise --detailed
+
+# Generate the detailed graph and specify the collapse depth explicitly
+npx fsd-cruise --detailed --depth 5
+```
 
 ## Output example
 
-<img width="1078" alt="image" src="https://github.com/s4ff0x/fsd-cruise/assets/46251157/187837b4-5f79-425a-8e86-b34fa90e7a48">
+<img width="1078" alt="image" src="./assets/preview.png">
