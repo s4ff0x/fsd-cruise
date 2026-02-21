@@ -1,5 +1,3 @@
-node_modules/
-*.tgz
-.git/
+.idea
+assets
 .gitignore
-.npmignore

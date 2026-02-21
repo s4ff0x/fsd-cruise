@@ -1,8 +1,11 @@
 {
   "name": "fsd-cruise",
-  "version": "1.0.5-beta.8",
+  "version": "1.0.5-beta.9",
   "description": "Simple cli tool to visualize your FSD architecture (based on dependency-cruiser)",
-  "repository": "https://github.com/s4ff0x/fsd-cruise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s4ff0x/fsd-cruise.git"
+  },
   "keywords": [
     "dependency-cruiser",
     "dependencies",
@@ -25,7 +28,9 @@
     "readline": "^1.3.0",
     "yargs": "^17.7.2"
   },
-  "bin": "./bin.js",
+  "bin": {
+    "fsd-cruise": "./bin.js"
+  },
   "devDependencies": {
     "prettier": "^3.2.5"
   }
